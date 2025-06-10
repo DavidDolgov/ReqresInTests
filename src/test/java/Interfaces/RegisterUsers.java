@@ -1,4 +1,4 @@
-package api;
+package Interfaces;
 
 import org.aeonbits.owner.Config;
 
@@ -26,24 +26,16 @@ public interface RegisterUsers extends Config {
     // for registerUserTest
     @Key("registerUserUrl")
     String registerUserUrl();
-    @Key("registerUserId")
-    int id();
-    @Key("registerUserToken")
-    String token();
     @Key("registerUserEmail")
     String email();
     @Key("registerUserPassword")
     String password();
 
     // for registerUnsuccessfulTest
-    @Key("registerUnsuccessfulError")
-    String unsuccessfulError();
     @Key("registerUnsuccessfulEmail")
     String unsuccessfulEmail();
 
     // for loginUserTest
-    @Key("loginUserToken")
-    String loginToken();
     @Key("loginUserEmail")
     String loginEmail();
     @Key("loginUserPassword")
@@ -52,8 +44,6 @@ public interface RegisterUsers extends Config {
     // for loginUnsuccessfulTest
     @Key("loginUserUrl")
     String loginUrl();
-    @Key("loginUnsuccessfulError")
-    String loginUnsuccessfulError();
     @Key("loginUnsuccessfulEmail")
     String loginUnsuccessfulEmail();
 }

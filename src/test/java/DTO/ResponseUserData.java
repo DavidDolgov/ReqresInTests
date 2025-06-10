@@ -1,4 +1,6 @@
-package api;
+package DTO;
+
+import java.util.Objects;
 
 public class ResponseUserData  {
     private String name;
@@ -46,5 +48,18 @@ public class ResponseUserData  {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ResponseUserData that = (ResponseUserData) o;
+        return Objects.equals(name, that.name) && Objects.equals(job, that.job) && Objects.equals(id, that.id) && Objects.equals(createdAt, that.createdAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, job, id, createdAt);
     }
 }

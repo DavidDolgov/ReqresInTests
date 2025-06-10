@@ -1,4 +1,6 @@
-package api;
+package DTO;
+
+import java.util.Objects;
 
 public class ResponseRegisterUser {
     private Integer id;
@@ -26,5 +28,18 @@ public class ResponseRegisterUser {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ResponseRegisterUser that = (ResponseRegisterUser) o;
+        return Objects.equals(id, that.id) && Objects.equals(token, that.token);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, token);
     }
 }

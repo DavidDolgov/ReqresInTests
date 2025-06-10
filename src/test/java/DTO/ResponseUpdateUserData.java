@@ -1,4 +1,6 @@
-package api;
+package DTO;
+
+import java.util.Objects;
 
 public class ResponseUpdateUserData {
     private String name;
@@ -36,5 +38,18 @@ public class ResponseUpdateUserData {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ResponseUpdateUserData that = (ResponseUpdateUserData) o;
+        return Objects.equals(name, that.name) && Objects.equals(job, that.job) && Objects.equals(updatedAt, that.updatedAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, job, updatedAt);
     }
 }
