@@ -1,7 +1,14 @@
-package DTO;
+package dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Objects;
 
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@Data
 public class RegisterUser {
     private String email;
     private String password;
@@ -18,12 +25,12 @@ public class RegisterUser {
         return email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void setPassword(String password) {

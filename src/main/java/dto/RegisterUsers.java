@@ -1,8 +1,8 @@
-package Interfaces;
+package dto;
 
 import org.aeonbits.owner.Config;
 
-@Config.Sources("file:E:\\JAVA\\TESTS\\ReqresInTests\\src\\test\\java\\resources\\RegisterUsers.properties")
+@Config.Sources("file:E:\\JAVA\\TESTS\\ReqresInTests\\src\\test\\resources\\RegisterUsers.properties")
 public interface RegisterUsers extends Config {
     @Key("baseUrl")
     String baseUrl();
@@ -36,14 +36,15 @@ public interface RegisterUsers extends Config {
     String unsuccessfulEmail();
 
     // for loginUserTest
+    @Key("loginUserUrl")
+    String loginUrl();
     @Key("loginUserEmail")
     String loginEmail();
     @Key("loginUserPassword")
     String loginPassword();
 
     // for loginUnsuccessfulTest
-    @Key("loginUserUrl")
-    String loginUrl();
+
     @Key("loginUnsuccessfulEmail")
     String loginUnsuccessfulEmail();
 }

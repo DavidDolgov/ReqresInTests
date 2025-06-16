@@ -17,6 +17,7 @@ dependencies {
     implementation("io.rest-assured:json-path:5.5.5")
     implementation("org.aeonbits.owner:owner:1.0.12")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.19.0")
+    implementation("org.projectlombok:lombok:1.18.38")
 
 }
 

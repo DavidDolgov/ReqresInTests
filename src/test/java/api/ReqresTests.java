@@ -1,11 +1,11 @@
-package ApiTests;
+package api;
 
-import DTO.*;
-import Interfaces.RegisterUsers;
-import Specifications.Specifications;
+import dto.*;
+import dto.RegisterUsers;
+import io.restassured.response.Response;
+import specifications.Specifications;
 import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
@@ -18,13 +18,12 @@ public class ReqresTests {
     public static final RegisterUsers application = ConfigFactory.create(RegisterUsers.class);
     public static final String URL = application.baseUrl();
 
-
     @ParameterizedTest
-    @CsvFileSource(resources = "/createdUserTest.csv")
-    public void createdUserTest(int statusCode, String name, String job) {
+    @CsvFileSource (resources = "/createdUserTest.csv")
+    public void createdUserTest(int statusCode, String name, String job)  {
         Specifications.installRequestSpecification(Specifications.requestSpec(URL), Specifications.responseSpecUniq(statusCode));
 
-        UserData user = new UserData(application.name(), application.job());
+        UserData user = new UserData(name, job);
 
         ResponseUserData response = given()
                 .body(user)
@@ -33,11 +32,13 @@ public class ReqresTests {
                 .then().log().all()
                 .extract().as(ResponseUserData.class);
 
+
         Assertions.assertEquals(name, response.getName());
         Assertions.assertEquals(job, response.getJob());
 
-        LocalDateTime currentTime = LocalDateTime.now();
+        LocalDateTime currentTime = LocalDateTime.now().minusHours(3);
         LocalDateTime updatedDate = LocalDateTime.parse(response.getCreatedAt(), DateTimeFormatter.ISO_DATE_TIME);
+
 
         Assertions.assertEquals(String.valueOf(currentTime).substring(0, 18),String.valueOf(updatedDate).substring(0, 18));
     }
@@ -59,7 +60,7 @@ public class ReqresTests {
         Assertions.assertEquals(name, response.getName());
         Assertions.assertEquals(job, response.getJob());
 
-        LocalDateTime currentTime = LocalDateTime.now();
+        LocalDateTime currentTime = LocalDateTime.now().minusHours(3);
         LocalDateTime updatedDate = LocalDateTime.parse(response.getUpdatedAt(), DateTimeFormatter.ISO_DATE_TIME);
 
         Assertions.assertEquals(String.valueOf(currentTime).substring(0, 18),String.valueOf(updatedDate).substring(0, 18));
@@ -67,10 +68,10 @@ public class ReqresTests {
 
     @ParameterizedTest
     @CsvFileSource(resources = "/registerUserTest.csv")
-    public void registerUserTest(int statusCode, int id, String token) {
+    public void registerUserTest(int statusCode,String email, String password, int id, String token) {
        Specifications.installRequestSpecification(Specifications.requestSpec(URL), Specifications.responseSpecUniq(statusCode));
 
-        RegisterUser user = new RegisterUser(application.email(), application.password());
+        RegisterUser user = new RegisterUser(email, password);
 
         ResponseRegisterUser response = given()
                 .body(user)
