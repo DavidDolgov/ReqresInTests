@@ -6,45 +6,31 @@ import org.aeonbits.owner.Config;
 public interface RegisterUsers extends Config {
     @Key("baseUrl")
     String baseUrl();
+    @Key("headerName")
+    String headerName();
+    @Key("headerValue")
+    String headerValue();
 
     // for createdUserTest
     @Key("createdUserUrl")
     String createdUserUrl();
-    @Key("createdUserName")
-    String name();
-    @Key("createdUserJob")
-    String job();
+    @Key("statusCode201")
+    int statusCode201();
 
     // for updateUserTest
     @Key("updateUserUrl")
     String updateUserUrl();
-    @Key("updateUserName")
-    String updateName();
-    @Key("updateUserJob")
-    String updateJob();
+    @Key("statusCode200")
+    int statusCode200();
 
     // for registerUserTest
     @Key("registerUserUrl")
     String registerUserUrl();
-    @Key("registerUserEmail")
-    String email();
-    @Key("registerUserPassword")
-    String password();
-
-    // for registerUnsuccessfulTest
-    @Key("registerUnsuccessfulEmail")
-    String unsuccessfulEmail();
+    @Key("statusCode400")
+    int statusCode400();
 
     // for loginUserTest
     @Key("loginUserUrl")
     String loginUrl();
-    @Key("loginUserEmail")
-    String loginEmail();
-    @Key("loginUserPassword")
-    String loginPassword();
 
-    // for loginUnsuccessfulTest
-
-    @Key("loginUnsuccessfulEmail")
-    String loginUnsuccessfulEmail();
 }

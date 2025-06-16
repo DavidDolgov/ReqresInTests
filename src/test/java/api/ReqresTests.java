@@ -2,7 +2,6 @@ package api;
 
 import dto.*;
 import dto.RegisterUsers;
-import io.restassured.response.Response;
 import specifications.Specifications;
 import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.Assertions;
@@ -20,12 +19,13 @@ public class ReqresTests {
 
     @ParameterizedTest
     @CsvFileSource (resources = "/createdUserTest.csv")
-    public void createdUserTest(int statusCode, String name, String job)  {
-        Specifications.installRequestSpecification(Specifications.requestSpec(URL), Specifications.responseSpecUniq(statusCode));
+    public void createdUserTest(String name, String job)  {
+        Specifications.installRequestSpecification(Specifications.requestSpec(URL), Specifications.responseSpecUniq(application.statusCode201()));
 
         UserData user = new UserData(name, job);
 
         ResponseUserData response = given()
+                .header(application.headerName(), application.headerValue())
                 .body(user)
                 .when()
                 .post(application.createdUserUrl())
@@ -44,13 +44,14 @@ public class ReqresTests {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/updateUserTest.csv")
-    public void updateUserTest(int statusCode, String name, String job) {
-        Specifications.installRequestSpecification(Specifications.requestSpec(URL), Specifications.responseSpecUniq(statusCode));
+    @CsvFileSource(resources = "/createdUserTest.csv")
+    public void updateUserTest(String name, String job) {
+        Specifications.installRequestSpecification(Specifications.requestSpec(URL), Specifications.responseSpecUniq(application.statusCode200()));
 
-        UserData user = new UserData(application.updateName(), application.updateJob());
+        UserData user = new UserData(name, job);
 
         ResponseUpdateUserData response = given()
+                .header(application.headerName(), application.headerValue())
                 .body(user)
                 .when()
                 .put(application.updateUserUrl())
@@ -68,12 +69,13 @@ public class ReqresTests {
 
     @ParameterizedTest
     @CsvFileSource(resources = "/registerUserTest.csv")
-    public void registerUserTest(int statusCode,String email, String password, int id, String token) {
-       Specifications.installRequestSpecification(Specifications.requestSpec(URL), Specifications.responseSpecUniq(statusCode));
+    public void registerUserTest(String email, String password, String token, int id) {
+       Specifications.installRequestSpecification(Specifications.requestSpec(URL), Specifications.responseSpecUniq(application.statusCode200()));
 
         RegisterUser user = new RegisterUser(email, password);
 
         ResponseRegisterUser response = given()
+                .header(application.headerName(), application.headerValue())
                 .body(user)
                 .when()
                 .post(application.registerUserUrl())
@@ -87,12 +89,13 @@ public class ReqresTests {
 
     @ParameterizedTest
     @CsvFileSource(resources = "/registerUnsuccessfulTest.csv")
-    public void registerUnsuccessfulTest(int statusCode, String error) {
-        Specifications.installRequestSpecification(Specifications.requestSpec(URL), Specifications.responseSpecUniq(statusCode));
+    public void registerUnsuccessfulTest(String email,String password, String error) {
+        Specifications.installRequestSpecification(Specifications.requestSpec(URL), Specifications.responseSpecUniq(application.statusCode400()));
 
-        RegisterUser user = new RegisterUser(application.unsuccessfulEmail(), "");
+        RegisterUser user = new RegisterUser(email, password);
 
         UnsuccessfulRegister response = given()
+                .header(application.headerName(), application.headerValue())
                 .body(user)
                 .when()
                 .post(application.registerUserUrl())
@@ -103,13 +106,14 @@ public class ReqresTests {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/loginUserTest.csv")
-    public void loginUserTest(int statusCode, String token) {
-        Specifications.installRequestSpecification(Specifications.requestSpec(URL), Specifications.responseSpecUniq(statusCode));
+    @CsvFileSource(resources = "/registerUserTest.csv")
+    public void loginUserTest(String email,String password, String token) {
+        Specifications.installRequestSpecification(Specifications.requestSpec(URL), Specifications.responseSpecUniq(application.statusCode200()));
 
-        RegisterUser user = new RegisterUser(application.loginEmail(), application.loginPassword());
+        RegisterUser user = new RegisterUser(email, password);
 
         ResponseRegisterUser response = given()
+                .header(application.headerName(), application.headerValue())
                 .body(user)
                 .when()
                 .post(application.loginUrl())
@@ -120,13 +124,14 @@ public class ReqresTests {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/loginUnsuccessfulTest.csv")
-    public void loginUnsuccessfulTest(int statusCode, String error) {
-        Specifications.installRequestSpecification(Specifications.requestSpec(URL), Specifications.responseSpecUniq(statusCode));
+    @CsvFileSource(resources = "/registerUnsuccessfulTest.csv")
+    public void loginUnsuccessfulTest(String email,String password, String error) {
+        Specifications.installRequestSpecification(Specifications.requestSpec(URL), Specifications.responseSpecUniq(application.statusCode400()));
 
-        RegisterUser user = new RegisterUser(application.loginUnsuccessfulEmail(), "");
+        RegisterUser user = new RegisterUser(email, password);
 
         UnsuccessfulRegister response = given()
+                .header(application.headerName(), application.headerValue())
                 .body(user)
                 .when()
                 .post(application.loginUrl())

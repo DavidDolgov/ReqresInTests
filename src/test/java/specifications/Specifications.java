@@ -11,7 +11,6 @@ public class Specifications {
     public static RequestSpecification requestSpec(String baseUrl) {
         return new RequestSpecBuilder()
                 .setBaseUri(baseUrl)
-                .addHeader("x-api-key", "reqres-free-v1")
                 .setContentType(ContentType.JSON)
                 .build();
     }
