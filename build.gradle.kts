@@ -23,6 +23,8 @@ dependencies {
     testCompileOnly("org.projectlombok:lombok:1.18.38")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.38")
 
+    implementation("org.postgresql:postgresql:42.7.7")
+
 }
 
 tasks.test {
