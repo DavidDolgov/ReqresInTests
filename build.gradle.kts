@@ -25,6 +25,8 @@ dependencies {
 
     implementation("org.postgresql:postgresql:42.7.7")
 
+    implementation("com.github.javafaker:javafaker:1.0.2")
+
 }
 
 tasks.test {

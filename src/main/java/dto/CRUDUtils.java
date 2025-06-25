@@ -9,14 +9,13 @@ import java.util.List;
 
 public class CRUDUtils {
     private static String CREATE_DOCTORS_TABLE = "CREATE TABLE IF NOT EXISTS doctors (" +
-                                                                        "id SERIAL PRIMARY KEY, " +
-                                                                        "surname VARCHAR(20) NOT NULL, " +
-                                                                        "name VARCHAR(20) NOT NULL, " +
-                                                                        "patronymic VARCHAR(20) NOT NULL, " +
+                                                                        "id SERIAL PRIMARY KEY," +
+                                                                        "name VARCHAR(20) NOT NULL," +
+                                                                        "surname VARCHAR(20) NOT NULL," +
                                                                         "medical_specialty VARCHAR(40) NOT NULL)";
     private static String DELETE_DOCTORS_TABLE = "DROP TABLE IF EXISTS doctors";
-    private static String INSERT_DOCTOR = "INSERT INTO doctors(surname, name, patronymic, medical_specialty) values(?,?,?,?)";
-    private static String UPDATE_DOCTOR = "UPDATE doctors SET surname = ? WHERE id = ?";
+    private static String INSERT_DOCTOR = "INSERT INTO doctors(name, surname, medical_specialty) values(?,?,?)";
+    private static String UPDATE_DOCTOR = "UPDATE doctors SET name = ? WHERE id = ?";
     private static String DELETE_DOCTOR = "DELETE FROM doctors WHERE id = ?";
 
 
@@ -29,12 +28,11 @@ public class CRUDUtils {
 
             while (rs.next()) {
                 int id = rs.getInt("id");
-                String surname = rs.getString("surname");
                 String name = rs.getString("name");
-                String patronymic = rs.getString("patronymic");
+                String surname = rs.getString("surname");
                 String medicalSpecialty = rs.getString("medical_specialty");
 
-                doctors.add(new Doctor(id, surname, name, patronymic, medicalSpecialty));
+                doctors.add(new Doctor(id, name, surname,  medicalSpecialty));
             }
 
         } catch (SQLException throwables) {
@@ -48,10 +46,9 @@ public class CRUDUtils {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(INSERT_DOCTOR)) {
 
-            ps.setString(1, doctor.getSurname());
-            ps.setString(2, doctor.getName());
-            ps.setString(3, doctor.getPatronymic());
-            ps.setString(4, doctor.getMedicalSpecialty());
+            ps.setString(1, doctor.getName());
+            ps.setString(2, doctor.getSurname());
+            ps.setString(3, doctor.getMedicalSpecialty());
             ps.executeUpdate();
 
         } catch (SQLException throwables) {
@@ -59,12 +56,12 @@ public class CRUDUtils {
         }
     }
 
-    public static void updateDoctorsSurname(int doctorId, String doctorSurname) {
+    public static void updateDoctorsName(int doctorId, String doctorName) {
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(UPDATE_DOCTOR)) {
 
-            ps.setString(1, doctorSurname);
+            ps.setString(1, doctorName);
             ps.setInt(2, doctorId);
             ps.executeUpdate();
 
@@ -73,7 +70,7 @@ public class CRUDUtils {
         }
     }
 
-    public static void deleteDoctors(int doctorId) {
+    public static void deleteDoctor(int doctorId) {
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(DELETE_DOCTOR)) {
@@ -86,28 +83,25 @@ public class CRUDUtils {
         }
     }
 
-    public static boolean createDoctorsTable() {
+    public static void createDoctorsTable() {
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(CREATE_DOCTORS_TABLE)) {
             ps.executeUpdate();
-            return true;
+
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return false;
     }
 
-    public static boolean deleteDoctorsTable() {
+    public static void deleteDoctorsTable() {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(DELETE_DOCTORS_TABLE)) {
             ps.executeUpdate();
-            return true;
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return false;
     }
 }

@@ -11,9 +11,8 @@ import java.util.Objects;
 @Data
 public class Doctor {
     private long id;
-    private String surname;
     private String name;
-    private String patronymic;
+    private String surname;
     private String medicalSpecialty;
 
     @Override
@@ -21,15 +20,12 @@ public class Doctor {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Doctor doctor = (Doctor) o;
-        if (surname.equals(doctor.getSurname()) &&
-                name.equals(doctor.getName()) &&
-                patronymic.equals(doctor.getPatronymic()) &&
-                medicalSpecialty.equals(doctor.getMedicalSpecialty())) return true;
-        return false;
+        return name.equals(doctor.getName()) && surname.equals(doctor.getSurname()) &&
+                medicalSpecialty.equals(doctor.getMedicalSpecialty());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, surname, name, patronymic, medicalSpecialty);
+        return Objects.hash(id, name, surname, medicalSpecialty);
     }
 }
