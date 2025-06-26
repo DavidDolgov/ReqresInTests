@@ -1,5 +1,3 @@
-package api;
-
 import dto.*;
 import dto.RegisterUsers;
 import specifications.Specifications;

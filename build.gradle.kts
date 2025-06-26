@@ -1,9 +1,11 @@
 plugins {
     id("java")
+    id("io.qameta.allure") version ("2.11.2")
 }
 
 group = "ru.dolgovDavid"
 version = "1.0-SNAPSHOT"
+
 
 repositories {
     mavenCentral()
@@ -26,6 +28,8 @@ dependencies {
     implementation("org.postgresql:postgresql:42.7.7")
 
     implementation("com.github.javafaker:javafaker:1.0.2")
+
+    testImplementation("io.qameta.allure:allure-junit5:2.29.1")
 
 }
 

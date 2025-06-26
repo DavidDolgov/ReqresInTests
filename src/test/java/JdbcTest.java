@@ -1,5 +1,3 @@
-package postgres;
-
 import com.github.javafaker.Faker;
 import dto.CRUDUtils;
 import dto.DataGenerator;
@@ -15,8 +13,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Stream;
 
-public class UserPostgresTest {
-    public static Faker faker = new Faker(new Locale("en"));
+public class JdbcTest {
+    private static Faker faker = new Faker(new Locale("en"));
     public static List<Doctor> registerDoctors = DataGenerator.generateDoctors(10);
 
     @BeforeEach
@@ -71,7 +69,7 @@ public class UserPostgresTest {
         Assertions.assertEquals(expectedSize, actualSize);
     }
 
-    public static Stream<Arguments> provideArgumentsForCreateDoctor() {
+    private static Stream<Arguments> provideArgumentsForCreateDoctor() {
         String test = "TEEEEEEEEEEEEEEEEST";
         return Stream.of(
                 Arguments.of(faker.name().firstName(),
@@ -87,7 +85,7 @@ public class UserPostgresTest {
         );
     }
 
-    public static Stream<Arguments> provideArgumentsForUpdateDoctor() {
+    private static Stream<Arguments> provideArgumentsForUpdateDoctor() {
         String test = "TEEEEEEEEEEEEEEEEST";
         return Stream.of(
                 Arguments.of(faker.number().numberBetween(1, 10),faker.name().firstName()),
@@ -97,7 +95,7 @@ public class UserPostgresTest {
         );
     }
 
-    public static Stream<Integer> provideIntID() {
+    private static Stream<Integer> provideIntID() {
         return Stream.of(faker.number().numberBetween(1,10),
                 1,
                 10,

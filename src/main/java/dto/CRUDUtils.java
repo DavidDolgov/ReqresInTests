@@ -12,7 +12,7 @@ public class CRUDUtils {
                                                                         "id SERIAL PRIMARY KEY," +
                                                                         "name VARCHAR(20) NOT NULL," +
                                                                         "surname VARCHAR(20) NOT NULL," +
-                                                                        "medical_specialty VARCHAR(40) NOT NULL)";
+                                                                        "medical_specialty VARCHAR(50) NOT NULL)";
     private static String DELETE_DOCTORS_TABLE = "DROP TABLE IF EXISTS doctors";
     private static String INSERT_DOCTOR = "INSERT INTO doctors(name, surname, medical_specialty) values(?,?,?)";
     private static String UPDATE_DOCTOR = "UPDATE doctors SET name = ? WHERE id = ?";
